@@ -18,7 +18,7 @@ public class Main {
     public static String calc(String input) {
         String[] tokens = input.split(" ");
         if (tokens.length != 3) {
-            throw new IllegalArgumentException("Некорректное выражение");
+            throw new IllegalArgumentException("формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
         }
 
         String operand1 = tokens[0];
@@ -36,7 +36,7 @@ public class Main {
         if (isRoman) {
             num1 = convertRomanToArabic(operand1);
             num2 = convertRomanToArabic(operand2);
-            if (num1 > 10 || num2 > 10) {
+            if (num1 == 0 || num1 > 10 || num2 == 0 || num2 > 10) {
                 throw new IllegalArgumentException("Римские числа должны быть от I до X");
             }
         } else {
@@ -66,8 +66,8 @@ public class Main {
     }
 
     private static boolean isRomanNumeral(String input) {
-        List<String> romanNumeralsList = Arrays.asList(romanNumerals);
-        return romanNumeralsList.contains(input);
+        String romanNumeralPattern = "^(?=[MDCLXVI])(M{0,3})(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$";
+        return input.matches(romanNumeralPattern);
     }
 
     private static boolean isArabicNumeral(String input) {
@@ -81,7 +81,9 @@ public class Main {
 
     private static final String[] romanNumerals = {
             "I", "II", "III", "IV", "V",
-            "VI", "VII", "VIII", "IX", "X"
+            "VI", "VII", "VIII", "IX", "X",
+            "XI", "XII", "XIII", "XIV", "XV",
+            "XVI", "XVII", "XVIII", "XIX", "XX"
     };
 
     private static int convertRomanToArabic(String input) {
